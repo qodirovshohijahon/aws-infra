@@ -5,3 +5,4 @@ terraform {
 output "terraform_version" {
   value = "${terraform.version}"
 }
+
