@@ -37,12 +37,12 @@ pipeline {
     stage("terraform Action") {
         steps {
             script {
-                sh''' 
+                sh """
                     terraform -chdir=./ecr plan \
-                    -var="access_key=${params.accessKey}" \
-                    -var="secret_key=${params.secretKey}"
-                '''
-        }
+                        -var="access_key=${params.accessKey}" \
+                        -var="secret_key=${params.secretKey}"
+                """
+            }
         }
     }
   }
