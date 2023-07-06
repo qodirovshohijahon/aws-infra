@@ -37,7 +37,13 @@ pipeline {
     stage("terraform Action") {
         steps {
             echo "Terraform action is...}"
-                sh('terraform -chdir=./ecr plan -var="access_key=${params.accessKey}" -var="secret_key=${params.secretKey}"')
+            script {
+                sh''' 
+                    terraform -chdir=./ecr plan \
+                    -var="access_key=${params.accessKey}" \
+                    -var="secret_key=${params.secretKey}"
+                '''
+        }
         }
     }
   }
