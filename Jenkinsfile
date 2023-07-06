@@ -36,7 +36,7 @@ pipeline {
 
     stage("terraform Action") {
         steps {
-            echo "Terraform action is...}"
+            echo "Terraform action is..."
             script {
                 sh''' 
                     terraform -chdir=./ecr plan \
