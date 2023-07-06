@@ -1,7 +1,18 @@
 pipeline {
 
   agent any
-
+    parameters {
+        string(
+            name: 'accessKey', 
+            defaultValue: '', 
+            description: 'AWS Access Key'
+        )
+        string(
+            name: 'secretKey', 
+            defaultValue: '', 
+            description: 'AWS Secret Key'
+        )
+    }
   stages {
 
     stage('Checkout') {
@@ -26,7 +37,11 @@ pipeline {
     stage("terraform Action") {
         steps {
             echo "Terraform action is...}"
-            sh('terraform -chdir=./ecr plan')
+            sh '''
+                terraform -chdir=./ecr plan \
+                    -var="access_key=${params.accessKey}" \
+                    -var="secret_key=${params.secretKey}"
+            '''
         }
     }
 }
