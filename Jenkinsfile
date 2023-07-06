@@ -19,14 +19,14 @@ pipeline {
     }
     stage("terraform init") {
         steps {
-            sh('terraform init')
+            sh('terraform -chdir=./ecr init')
         }
     }
 
     stage("terraform Action") {
         steps {
             echo "Terraform action is...}"
-            sh('terraform plan')
+            sh('terraform -chdir=./ecr plan')
         }
     }
 }
