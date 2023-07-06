@@ -3,22 +3,22 @@ pipeline {
   agent any
     parameters {
         string(
-            name: 'accessKey', 
+            name: 'ACCESS_KEY_ID', 
             defaultValue: '', 
             description: 'AWS Access Key'
         )
         string(
-            name: 'secretKey', 
+            name: 'SECRET_ACCESS_KEY_ID', 
             defaultValue: '', 
             description: 'AWS Secret Key'
         )
         string(
-            name: 'defaultRegion', 
+            name: 'DEFAULT_REGION', 
             defaultValue: 'us-east-1', 
             description: 'AWS Default Region'
         )
         string(
-            name: 'ecrName', 
+            name: 'ECR_NAME', 
             defaultValue: 'edp-dev-registry', 
             description: 'AWS ECR Name'
         )        
@@ -49,9 +49,9 @@ pipeline {
             script {
                 sh """
                     terraform -chdir=./ecr plan \
-                        -var="access_key=${params.accessKey}" \
-                        -var="secret_key=${params.secretKey}" \
-                        -var="region=${params.defaultRegion}"
+                        -var="access_key=${params.ACCESS_KEY_ID}" \
+                        -var="secret_key=${params.SECRET_ACCESS_KEY_ID}" \
+                        -var="region=${params.DEFAULT_REGION}"
                 """
             }
         }
@@ -61,10 +61,10 @@ pipeline {
             script {
                 sh """
                     terraform -chdir=./ecr apply --auto-approve=true \
-                        -var="access_key=${params.accessKey}" \
-                        -var="secret_key=${params.secretKey}" \
-                        -var="region=${params.defaultRegion}" \
-                        -var="ecr_name=${params.ecrName}"
+                        -var="access_key=${params.ACCESS_KEY_ID}" \
+                        -var="secret_key=${params.SECRET_ACCESS_KEY_ID}" \
+                        -var="region=${params.DEFAULT_REGION}" \
+                        -var="ecr_name=${params.ECR_NAME}"
                 """
             }
         }
@@ -74,10 +74,10 @@ pipeline {
             script {
                 sh """
                     terraform -chdir=./ecr destroy --auto-approve=true \
-                        -var="access_key=${params.accessKey}" \
-                        -var="secret_key=${params.secretKey}" \
-                        -var="region=${params.defaultRegion}" \
-                        -var="ecr_name=${params.ecrName}"
+                        -var="access_key=${params.ACCESS_KEY_ID}" \
+                        -var="secret_key=${params.SECRET_ACCESS_KEY_ID}" \
+                        -var="region=${params.DEFAULT_REGION}" \
+                        -var="ecr_name=${params.ECR_NAME}"
                 """
             }
         }
