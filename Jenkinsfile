@@ -63,7 +63,8 @@ pipeline {
                     terraform -chdir=./ecr apply --auto-approve=true \
                         -var="access_key=${params.accessKey}" \
                         -var="secret_key=${params.secretKey}" \
-                        -var="region=${params.defaultRegion}"
+                        -var="region=${params.defaultRegion}" \
+                        -var="ecr_name=${params.ecrName}"
                 """
             }
         }
