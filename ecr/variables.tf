@@ -27,7 +27,7 @@ variable "tags" {
 variable "ecr_name" {
   description = "The list of ecr names to create"
   type        = string
-  default     = "edp-dev"
+  default     = "edp-dev-registry"
 }
 
 variable "image_mutability" {
