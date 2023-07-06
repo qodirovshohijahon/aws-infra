@@ -25,7 +25,7 @@ pipeline {
                 userRemoteConfigs: [[url: 'https://github.com/qodirovshohijahon/aws-infra.git']]
             ]
         )
-    }
+        }
 
     }
     stage("terraform init") {
@@ -37,12 +37,8 @@ pipeline {
     stage("terraform Action") {
         steps {
             echo "Terraform action is...}"
-            sh '''
-                terraform -chdir=./ecr plan \
-                    -var="access_key=${params.accessKey}" \
-                    -var="secret_key=${params.secretKey}"
-            '''
+                sh('terraform -chdir=./ecr plan -var="access_key=${params.accessKey}" -var="secret_key=${params.secretKey}"')
         }
     }
-}
+  }
 }
