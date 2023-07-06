@@ -17,6 +17,11 @@ pipeline {
             defaultValue: 'us-east-1', 
             description: 'AWS Default Region'
         )
+        string(
+            name: 'ecrName', 
+            defaultValue: 'edp-dev-registry', 
+            description: 'AWS ECR Name'
+        )        
     }
   stages {
 
@@ -70,7 +75,8 @@ pipeline {
                     terraform -chdir=./ecr destroy --auto-approve=true \
                         -var="access_key=${params.accessKey}" \
                         -var="secret_key=${params.secretKey}" \
-                        -var="region=${params.defaultRegion}"
+                        -var="region=${params.defaultRegion}" \
+                        -var="ecr_name=${params.ecrName}"
                 """
             }
         }

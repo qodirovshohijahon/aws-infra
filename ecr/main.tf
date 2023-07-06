@@ -22,7 +22,7 @@ provider "aws" {
 }
 
 resource "aws_ecr_repository" "ecr" {
-  name                 = var.ecr_name
+  name                 = "${var.ecr_name}"
   image_tag_mutability = var.image_mutability
   encryption_configuration {
     encryption_type = var.encrypt_type
