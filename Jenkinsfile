@@ -55,7 +55,7 @@ pipeline {
         steps {
             script {
                 sh """
-                    terraform -chdir=./ecr apply -auto-appove=true \
+                    terraform -chdir=./ecr apply --auto-approve=true \
                         -var="access_key=${params.accessKey}" \
                         -var="secret_key=${params.secretKey}" \
                         -var="region=${params.defaultRegion}"
@@ -67,7 +67,7 @@ pipeline {
         steps {
             script {
                 sh """
-                    terraform -chdir=./ecr destroy -auto-appove=true \
+                    terraform -chdir=./ecr destroy --auto-approve=true \
                         -var="access_key=${params.accessKey}" \
                         -var="secret_key=${params.secretKey}" \
                         -var="region=${params.defaultRegion}"
