@@ -3,16 +3,6 @@ pipeline {
   agent any
     parameters {
         string(
-            name: 'ACCESS_KEY_ID', 
-            defaultValue: '', 
-            description: 'AWS Access Key'
-        )
-        string(
-            name: 'SECRET_ACCESS_KEY_ID', 
-            defaultValue: '', 
-            description: 'AWS Secret Key'
-        )
-        string(
             name: 'DEFAULT_REGION', 
             defaultValue: 'us-east-1', 
             description: 'AWS Default Region'
@@ -23,6 +13,12 @@ pipeline {
             description: 'AWS ECR Name'
         )        
     }
+
+    environment {
+        AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
+        AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+    }
+
   stages {
 
     stage('Checkout') {
@@ -49,8 +45,8 @@ pipeline {
             script {
                 sh """
                     terraform -chdir=./ecr plan \
-                        -var="access_key=${params.ACCESS_KEY_ID}" \
-                        -var="secret_key=${params.SECRET_ACCESS_KEY_ID}" \
+                        -var="access_key=${env.ACCESS_KEY_ID}" \
+                        -var="secret_key=${env.AWS_SECRET_ACCESS_KEY}" \
                         -var="region=${params.DEFAULT_REGION}"
                 """
             }
@@ -62,7 +58,7 @@ pipeline {
                 sh """
                     terraform -chdir=./ecr apply --auto-approve=true \
                         -var="access_key=${params.ACCESS_KEY_ID}" \
-                        -var="secret_key=${params.SECRET_ACCESS_KEY_ID}" \
+                        -var="secret_key=${env.AWS_SECRET_ACCESS_KEY}" \
                         -var="region=${params.DEFAULT_REGION}" \
                         -var="ecr_name=${params.ECR_NAME}"
                 """
@@ -75,7 +71,7 @@ pipeline {
                 sh """
                     terraform -chdir=./ecr destroy --auto-approve=true \
                         -var="access_key=${params.ACCESS_KEY_ID}" \
-                        -var="secret_key=${params.SECRET_ACCESS_KEY_ID}" \
+                        -var="secret_key=${env.AWS_SECRET_ACCESS_KEY}" \
                         -var="region=${params.DEFAULT_REGION}" \
                         -var="ecr_name=${params.ECR_NAME}"
                 """
