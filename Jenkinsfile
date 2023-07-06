@@ -12,6 +12,11 @@ pipeline {
             defaultValue: '', 
             description: 'AWS Secret Key'
         )
+        string(
+            name: 'defaultRegion', 
+            defaultValue: 'us-east-1', 
+            description: 'AWS Default Region'
+        )
     }
   stages {
 
@@ -40,7 +45,8 @@ pipeline {
                 sh """
                     terraform -chdir=./ecr plan \
                         -var="access_key=${params.accessKey}" \
-                        -var="secret_key=${params.secretKey}"
+                        -var="secret_key=${params.secretKey}" \
+                        -var="region=${params.defaultRegion}"
                 """
             }
         }
