@@ -44,7 +44,7 @@ pipeline {
         }
     }
 
-    stage("terraform Action") {
+    stage("Terraform Initialization") {
         steps {
             script {
                 sh """
